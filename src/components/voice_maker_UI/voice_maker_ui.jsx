@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import { Avatar, Button, Container, TextField } from "@mui/material";
+import { Button, Container, TextField } from "@mui/material";
 import InputSlider from "../input-slider/input-slider";
 import { SelectVoiceStructure } from "../select-voice/select-voice-structure";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
@@ -18,19 +18,33 @@ export const VoiceMakerUi = () => {
     setPitch,
     setRate,
     setVolume,
-    pitch,
-    rate,
-    volume,
     handlePause,
     speaking,
     reset,
     setReset,
+    playPauseToggle,
   } = useGlobalContext();
 
   const [activeTab, setActiveTab] = useState("voice-settings");
+  const [buttonClicked, setButtonClicked] = useState(false);
+
+  useEffect(() => {
+    if (buttonClicked && !speaking) {
+      setButtonClicked(false);
+    }
+  }, [speaking]);
 
   const handleClickVariant = (variant) => () => {
     enqueueSnackbar("Textfield should not be empty", { variant });
+  };
+
+  const handleConvertToSpeech = () => {
+    if (!text) {
+      // handleClickVariant("error")();
+    } else {
+      setButtonClicked(true);
+      handleSpeech();
+    }
   };
 
   const renderContent = () => {
@@ -46,13 +60,20 @@ export const VoiceMakerUi = () => {
           <Box className="h-[11vh] shadow flex items-center justify-center">
             <InputSlider name="Voice Pitch" id="pitch" />
           </Box>
-          <Box className="h-[11vh] shadow flex items-center justify-end pr-5">
+          <Box className="h-[11vh] shadow gap-4 flex items-center justify-end pr-5">
             <Button
               variant="outlined"
               className="text-slate-500 border-1 border-slate-400"
               onClick={() => setReset(1)}
             >
               RESET
+            </Button>
+            <Button
+              variant="outlined"
+              className="text-slate-500 border-1 border-slate-400"
+              onClick={handlePause}
+            >
+              STOP
             </Button>
           </Box>
         </>
@@ -78,7 +99,7 @@ export const VoiceMakerUi = () => {
               onChange={(e) => setText(e.target.value)}
               id="standard-multiline-static"
               multiline
-              rows={12}
+              rows={11}
               variant="standard"
               className="p-1 w-full lg:w-[43vw]"
               InputProps={{
@@ -115,26 +136,20 @@ export const VoiceMakerUi = () => {
             </Box>
             <hr className="shadow border-[1.5px]" />
             <Box className="rounded-lg h-[12vh] items-center flex justify-center">
-              {speaking ? (
+              {speaking && !buttonClicked ? (
                 <PauseCircleIcon
                   className="text-[60px] cursor-pointer text-blue-500"
                   onClick={handlePause}
                 />
               ) : !text ? (
                 <PlayCircleIcon
-                  className="text-[60px] cursor-pointer  text-blue-500"
-                  onClick={() => {
-                    // handleSpeech();
-                    handleClickVariant("error")();
-                  }}
+                  className="text-[60px] cursor-pointer text-blue-500"
+                  onClick={handleClickVariant("error")}
                 />
               ) : (
                 <PlayCircleIcon
-                  className="text-[60px] cursor-pointer  text-blue-500"
-                  onClick={() => {
-                    handleSpeech();
-                    // handleClickVariant("error")();
-                  }}
+                  className="text-[60px] cursor-pointer text-blue-500"
+                  onClick={handleSpeech}
                 />
               )}
             </Box>
@@ -163,9 +178,9 @@ export const VoiceMakerUi = () => {
           {activeTab === "voice-settings" && (
             <Button
               disabled={!text}
-              className="w-full lg:w-[30vw] h-[8vh] font-medium "
+              className="w-full lg:w-[30vw] h-[8vh] font-medium"
               variant="contained"
-              onClick={handleSpeech}
+              onClick={handleConvertToSpeech}
             >
               CONVERT TO SPEECH
             </Button>

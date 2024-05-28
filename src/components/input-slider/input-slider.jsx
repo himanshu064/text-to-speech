@@ -24,7 +24,6 @@ export default function InputSlider({ name, id }) {
     } else if (id === "volume") {
       setVolume(newValue);
     }
-    // setReset(false);
   };
   React.useEffect(() => {
     console.log(reset);
@@ -32,8 +31,6 @@ export default function InputSlider({ name, id }) {
       setValue(50);
       setReset(0);
     }
-
-    // setReset(0);
   }, [reset]);
   return (
     <Box className="w-[70vw] ">
@@ -53,11 +50,9 @@ export default function InputSlider({ name, id }) {
             step={1}
           />
         </Grid>
-        {/* {setReset(0)} */}
         <Grid item>
           <Input
             value={value}
-            // value={value}
             size="small"
             inputProps={{
               step: 1,

@@ -8,10 +8,10 @@ import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 
 export const SelectVoiceStructure = () => {
   const { text } = useGlobalContext();
-  // console.log(text, "select");
+
   const [currentlyPlayingIndex, setCurrentlyPlayingIndex] = useState(null);
   const { voices, speak, cancel, speaking } = useSpeechSynthesis();
-  // console.log(text, "text");
+
   const handleSpeak = (voiceName, index, text) => {
     cancel();
     console.log("spek", voiceName, "voiceName", index, "index");
@@ -19,7 +19,6 @@ export const SelectVoiceStructure = () => {
     const selectedVoice = voices?.find((voice) => voice?.name === voiceName);
     console.log(selectedVoice, "selectedVoices");
     if (selectedVoice) {
-      console.log("ki", text);
       speak({ text: text, voice: selectedVoice });
       setCurrentlyPlayingIndex(index);
     }
@@ -73,10 +72,7 @@ export const SelectVoiceStructure = () => {
                     onClick={() => handleSpeak(voice?.name, index, text)}
                   />
                 ) : (
-                  <PlayCircleIcon
-                    className="text-[50px] cursor-no-drop text-gray-300"
-                    // onClick={() => handleSpeak(voice?.name, index, text)}
-                  />
+                  <PlayCircleIcon className="text-[50px] cursor-no-drop text-gray-300" />
                 )}
               </Box>
             </Box>

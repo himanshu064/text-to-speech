@@ -13,10 +13,11 @@ const AppProvider = ({ children }) => {
   const [volume, setVolume] = useState(50);
   const { speak, cancel, voices, speaking } = useSpeechSynthesis();
   const [reset, setReset] = useState(0);
+
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSpeech = () => {
-    console.log("jij");
+    // console.log("jij");
     cancel();
     const scaledPitch = pitch / 50;
     const scaledRate = rate / 50;
@@ -27,16 +28,15 @@ const AppProvider = ({ children }) => {
   // console.log(voices, "voicdddddddddddes", text);
 
   const handlePause = () => {
-    console.log(speaking, "pauseSepekind");
+    // console.log(speaking, "pauseSepekind");
 
     if (speaking) {
       cancel();
+
       // setCurrentlyPlayingIndex(null);
     }
   };
-  const handleClickVariant = (variant) => () => {
-    enqueueSnackbar("Textfield shod not be empty", { variant });
-  };
+
   return (
     <AppContext.Provider
       value={{
@@ -54,7 +54,6 @@ const AppProvider = ({ children }) => {
         handlePause,
         reset,
         setReset,
-        handleClickVariant,
       }}
     >
       {children}
