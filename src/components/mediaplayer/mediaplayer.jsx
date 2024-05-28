@@ -28,7 +28,7 @@ const MediaPlayer = () => {
     enqueueSnackbar("The text is required !", { variant });
   };
   return (
-    <Box className="flex items-center justify-center space-x-4 w-[43vw] ml-10">
+    <Box className="flex items-center justify-center space-x-4 w-[50vw] md:w-[45vw] ">
       {speaking ? (
         <PauseCircleFilledIcon
           className="text-blue-500 cursor-pointer ... "

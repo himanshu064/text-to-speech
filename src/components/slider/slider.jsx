@@ -26,6 +26,9 @@ export default function InputSlider({ name, id, reset, setReset }) {
   React.useEffect(() => {
     if (reset) {
       setValue(1);
+      setSpeed(1);
+      setPitch(1);
+      setVolume(1);
       setReset("false");
     }
   }, [reset]);

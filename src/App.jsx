@@ -18,10 +18,10 @@ function App() {
             <img src={VoiceMakerLogo} alt="Voice Maker Logo" />
           </Box>
         </Box>
-        <Box className="flex flex-col bg-white shadow">
-          <Box className="bg-white rounded-lg  border-2 border-slate-100 md:flex md:gap-8  md:items-center md:justify-center p-5  ">
+        <Box className="flex flex-col bg-white shadow border-2 border-slate-300 px-3 md:px-0  ">
+          <Box className="bg-white rounded-lg   md:flex md:gap-8   md:items-center md:justify-center py-5 md:py-5">
             {/* Left box */}
-            <Box className="md:w-7/12 border-2 border-slate-200">
+            <Box className="md:w-7/12 border-2 border-slate-300 rounded-lg">
               <Box className="h-[96] md:h-auto">
                 <TextField
                   placeholder="Type text here..."
@@ -67,9 +67,9 @@ function App() {
             </Box>
 
             {/* Right box */}
-            <Box className="md:w-4/12 mt-0 md:mt-0 border-2 border-slate-100 h-[61vh]  rounded-lg">
+            <Box className="md:w-4/12 mt-6 md:mt-0 border-2 border-slate-300 h-[62vh]  rounded-lg">
               <Box className="h-auto md:h-auto flex flex-col justify-center items-center shadow-md ">
-                <Typography className="text-3xl p-3">Voice Settings</Typography>
+                <Typography className="text-xl p-3">Voice Settings</Typography>
               </Box>
               <Box className="h-auto p-2">
                 <InputSlider
@@ -116,8 +116,8 @@ function App() {
                 onClick={() => textToSpeech()}
                 className={
                   text
-                    ? "w-full h-10 md:h-10 shadow mt-10  rounded-lg "
-                    : "w-full h-10 md:h-10 shadow mt-10  rounded-lg cursor-not-allowed ... cursor-*"
+                    ? "w-full h-10 md:h-10 shadow mt-12  rounded-lg "
+                    : "w-full h-10 md:h-10 shadow mt-12  rounded-lg cursor-not-allowed ... cursor-*"
                 }
                 variant="contained"
               >
@@ -125,9 +125,13 @@ function App() {
               </Button>
             </Box>
           </Box>
-          <Box className="flex gap-10">
-            <MediaPlayer />
-            <VoicesDropdown />
+          <Box className="flex justify-center items-center gap-8    ">
+            <Box className="md:w-7/12 ">
+              <MediaPlayer />
+            </Box>
+            <Box className="md:w-4/12 ">
+              <VoicesDropdown />
+            </Box>
           </Box>
         </Box>
       </Container>
