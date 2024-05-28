@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Slider from "@mui/material/Slider";
 import MuiInput from "@mui/material/Input";
 import { useGlobalContext } from "../../contextApi/contextApi";
-import App from "../../App";
 
 // Override default CSS styles for Input component
 const Input = styled(MuiInput)`
@@ -44,17 +43,17 @@ export default function InputSlider({ name, id, reset, setReset }) {
     }
   };
 
-  const handleInputChange = (event) => {
-    setValue(event.target.value === "" ? 0 : parseFloat(event.target.value));
-  };
+  // const handleInputChange = (event) => {
+  //   setValue(event.target.value === "" ? 0 : parseFloat(event.target.value));
+  // };
 
-  const handleBlur = () => {
-    if (value < 0) {
-      setValue(0);
-    } else if (value > 100) {
-      setValue(100);
-    }
-  };
+  // const handleBlur = () => {
+  //   if (value < 0) {
+  //     setValue(0);
+  //   } else if (value > 100) {
+  //     setValue(100);
+  //   }
+  // };
 
   return (
     <Box>
@@ -78,8 +77,8 @@ export default function InputSlider({ name, id, reset, setReset }) {
           <Input
             value={value}
             size="small"
-            onChange={handleInputChange}
-            onBlur={handleBlur}
+            // onChange={handleInputChange}
+            // onBlur={handleBlur}
             inputProps={{
               // step: 0.1,
               // min: 0.5,
@@ -90,7 +89,6 @@ export default function InputSlider({ name, id, reset, setReset }) {
           />
         </Grid>
       </Grid>
-      {/* <App sliderReset={sliderReset} /> */}
     </Box>
   );
 }

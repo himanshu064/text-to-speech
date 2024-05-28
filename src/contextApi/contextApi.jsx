@@ -1,6 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import { enqueueSnackbar } from "notistack";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useSpeechSynthesis } from "react-speech-kit";
 const AppContext = createContext();
+
+SpeechSynthesisUtterance;
 
 // In AppProvider component
 const AppProvider = ({ children }) => {
@@ -61,6 +64,25 @@ const AppProvider = ({ children }) => {
     cancel();
   }
 
+  const handleClickVariant = (variant) => () => {
+    console.log("hiii clicked");
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar("The text is required !", { variant });
+    speak({
+      text: "The text is requireds",
+      pitch: pitch,
+      rate: speed,
+      volume: volume,
+      voice: selectedVoiceObj,
+    });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      textToSpeech();
+    }, 1000);
+  }, [volume, speed, pitch]);
+
   return (
     <AppContext.Provider
       value={{
@@ -80,6 +102,7 @@ const AppProvider = ({ children }) => {
         speaking,
         handleVoiceChange,
         selectedVoice,
+        handleClickVariant,
       }}
     >
       {children}

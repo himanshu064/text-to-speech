@@ -3,12 +3,10 @@ import { Box } from "@mui/material";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
 import { useGlobalContext } from "../../contextApi/contextApi";
-import { useSnackbar } from "notistack";
 
 const MediaPlayer = () => {
-  const { text } = useGlobalContext();
-  const { enqueueSnackbar } = useSnackbar();
-  const { textToSpeech, handleStop, speaking } = useGlobalContext();
+  const { textToSpeech, handleStop, speaking, text, handleClickVariant } =
+    useGlobalContext();
 
   const togglePlay = () => {
     if (speaking) {
@@ -22,11 +20,6 @@ const MediaPlayer = () => {
     }
   };
 
-  const handleClickVariant = (variant) => () => {
-    console.log("hiii clicked");
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar("The text is required !", { variant });
-  };
   return (
     <Box className="flex items-center justify-center space-x-4 w-[50vw] md:w-[45vw] ">
       {speaking ? (

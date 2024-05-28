@@ -1,6 +1,5 @@
 import React from "react";
 import { Select, MenuItem, InputLabel, FormControl, Box } from "@mui/material";
-import { useSpeechSynthesis } from "react-speech-kit";
 import { useGlobalContext } from "../../contextApi/contextApi";
 
 const VoicesDropdown = () => {
