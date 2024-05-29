@@ -24,6 +24,7 @@ function App() {
       handleClickVariant("error")();
     }
   }
+
   return (
     <Box className="bg-slate-100 min-h-screen flex flex-col items-center justify-center">
       <Container className=" p-5  ">

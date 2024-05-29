@@ -5,27 +5,23 @@ import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
 import { useGlobalContext } from "../../contextApi/contextApi";
 
 const MediaPlayer = () => {
-  const { textToSpeech, handleStop, speaking, text, handleClickVariant } =
+  const { textToSpeech, text, handleClickVariant, handlePause, playIcon } =
     useGlobalContext();
 
   const togglePlay = () => {
-    if (speaking) {
-      handleStop();
+    if (text) {
+      textToSpeech();
     } else {
-      if (text) {
-        textToSpeech();
-      } else {
-        handleClickVariant("error")();
-      }
+      handleClickVariant("error")();
     }
   };
 
   return (
     <Box className="flex items-center justify-center space-x-4 w-[50vw] md:w-[45vw] ">
-      {speaking ? (
+      {playIcon ? (
         <PauseCircleFilledIcon
           className="text-blue-500 cursor-pointer ... "
-          onClick={togglePlay}
+          onClick={handlePause}
           style={{ fontSize: 48 }} // Adjust the size as needed
         ></PauseCircleFilledIcon>
       ) : (

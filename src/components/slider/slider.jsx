@@ -61,10 +61,8 @@ export default function InputSlider({ name, id, reset, setReset }) {
         {name}
       </Typography>
       <Grid container spacing={2} alignItems="center">
-        {/* <Grid item><VolumeUp /></Grid> */}
         <Grid item xs>
           <Slider
-            // className="w-[23vw] "
             value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
