@@ -4,7 +4,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import App from "./App.jsx";
 import "./index.css";
-// import { AppProvider } from "./contextApi/contaxtApi.js";
 import { AppProvider } from "./contextApi/contaxtApi.jsx";
 import { SnackbarProvider } from "notistack";
 const theme = createTheme();

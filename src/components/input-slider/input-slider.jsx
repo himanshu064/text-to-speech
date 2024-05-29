@@ -12,11 +12,14 @@ const Input = styled(MuiInput)`
 `;
 
 export default function InputSlider({ name, id }) {
-  const { setPitch, setRate, setVolume, reset, setReset } = useGlobalContext();
-  const [value, setValue] = React.useState(50);
+  const { setPitch, setRate, rate, setVolume, reset, setReset } =
+    useGlobalContext();
+  const initialValue = parseFloat(localStorage.getItem(id)) || 1;
+  const [value, setValue] = React.useState(initialValue);
 
-  const handleSliderChange = (event, newValue) => {
+  const handleSliderChange = (newValue) => {
     setValue(newValue);
+    localStorage.setItem(id, newValue);
     if (id === "speed") {
       setRate(newValue);
     } else if (id === "pitch") {
@@ -25,13 +28,19 @@ export default function InputSlider({ name, id }) {
       setVolume(newValue);
     }
   };
+
   React.useEffect(() => {
-    console.log(reset);
     if (reset) {
-      setValue(50);
+      const defaultValue = 1;
+      setValue(defaultValue);
+      localStorage.setItem(id, defaultValue);
       setReset(0);
+      setPitch(defaultValue);
+      setRate(defaultValue);
+      setVolume(defaultValue);
     }
   }, [reset]);
+
   return (
     <Box className="w-[70vw] ">
       <Typography id="input-slider" gutterBottom className="ml-3 absolute">
@@ -41,13 +50,13 @@ export default function InputSlider({ name, id }) {
         <Grid item></Grid>
         <Grid item xs>
           <Slider
-            className=" mt-5 relative "
+            className="mt-5 relative"
             value={value}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
-            min={0}
-            max={100}
-            step={1}
+            min={0.5}
+            max={2}
+            step={0.1}
           />
         </Grid>
         <Grid item>
@@ -55,9 +64,6 @@ export default function InputSlider({ name, id }) {
             value={value}
             size="small"
             inputProps={{
-              step: 1,
-              min: 0,
-              max: 100,
               "aria-labelledby": "input-slider",
             }}
             sx={{
@@ -67,7 +73,7 @@ export default function InputSlider({ name, id }) {
                 },
               },
             }}
-            className="p-2 bg-white-200 mt-5"
+            className="p-2  mt-5"
           />
         </Grid>
       </Grid>

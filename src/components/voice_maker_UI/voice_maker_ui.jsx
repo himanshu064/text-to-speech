@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { Button, Container, TextField } from "@mui/material";
 import InputSlider from "../input-slider/input-slider";
@@ -9,44 +9,25 @@ import { useGlobalContext } from "../../contextApi/contaxtApi";
 import { useSnackbar } from "notistack";
 
 export const VoiceMakerUi = () => {
-  const { enqueueSnackbar } = useSnackbar();
-
   const {
     text,
     setText,
     handleSpeech,
-    setPitch,
-    setRate,
-    setVolume,
     handlePause,
-    speaking,
-    reset,
+    handleStop,
     setReset,
-    playPauseToggle,
+    isPaused,
+    handleSpeechVoiceMAkerUI,
   } = useGlobalContext();
 
   const [activeTab, setActiveTab] = useState("voice-settings");
-  const [buttonClicked, setButtonClicked] = useState(false);
 
-  useEffect(() => {
-    if (buttonClicked && !speaking) {
-      setButtonClicked(false);
-    }
-  }, [speaking]);
-
+  const { enqueueSnackbar } = useSnackbar();
   const handleClickVariant = (variant) => () => {
-    enqueueSnackbar("Textfield should not be empty", { variant });
-  };
-
-  const handleConvertToSpeech = () => {
-    if (!text) {
-      // handleClickVariant("error")();
-    } else {
-      setButtonClicked(true);
-      handleSpeech();
+    if (!text.trim()) {
+      enqueueSnackbar("Textfield should not be empty", { variant });
     }
   };
-
   const renderContent = () => {
     if (activeTab === "voice-settings") {
       return (
@@ -71,7 +52,7 @@ export const VoiceMakerUi = () => {
             <Button
               variant="outlined"
               className="text-slate-500 border-1 border-slate-400"
-              onClick={handlePause}
+              onClick={handleStop}
             >
               STOP
             </Button>
@@ -127,7 +108,7 @@ export const VoiceMakerUi = () => {
                 variant="outlined"
                 onClick={() => {
                   setText("");
-                  handlePause();
+                  handleStop();
                 }}
                 className="text-slate-500 border-1 border-slate-400 text-xs ml-5 mb-2"
               >
@@ -136,7 +117,7 @@ export const VoiceMakerUi = () => {
             </Box>
             <hr className="shadow border-[1.5px]" />
             <Box className="rounded-lg h-[12vh] items-center flex justify-center">
-              {speaking && !buttonClicked ? (
+              {isPaused === 1 ? (
                 <PauseCircleIcon
                   className="text-[60px] cursor-pointer text-blue-500"
                   onClick={handlePause}
@@ -149,7 +130,7 @@ export const VoiceMakerUi = () => {
               ) : (
                 <PlayCircleIcon
                   className="text-[60px] cursor-pointer text-blue-500"
-                  onClick={handleSpeech}
+                  onClick={handleSpeechVoiceMAkerUI}
                 />
               )}
             </Box>
@@ -175,16 +156,26 @@ export const VoiceMakerUi = () => {
             </Box>
           </Box>
           {renderContent()}
-          {activeTab === "voice-settings" && (
-            <Button
-              disabled={!text}
-              className="w-full lg:w-[30vw] h-[8vh] font-medium"
-              variant="contained"
-              onClick={handleConvertToSpeech}
-            >
-              CONVERT TO SPEECH
-            </Button>
-          )}
+          {activeTab === "voice-settings" &&
+            (text ? (
+              <Button
+                // disabled={!text}
+                className="w-full lg:w-[30vw] h-[8vh] font-medium"
+                variant="contained"
+                onClick={handleSpeech}
+              >
+                CONVERT TO SPEECH
+              </Button>
+            ) : (
+              <Button
+                // disabled={!text}
+                className="w-full lg:w-[30vw] h-[8vh] font-medium"
+                variant="contained"
+                onClick={handleClickVariant("error")}
+              >
+                CONVERT TO SPEECH
+              </Button>
+            ))}
         </Box>
       </Container>
     </Box>
