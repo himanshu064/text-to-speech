@@ -12,12 +12,11 @@ const Input = styled(MuiInput)`
 `;
 
 export default function InputSlider({ name, id }) {
-  const { setPitch, setRate, rate, setVolume, reset, setReset } =
-    useGlobalContext();
+  const { setPitch, setRate, setVolume, reset, setReset } = useGlobalContext();
   const initialValue = parseFloat(localStorage.getItem(id)) || 1;
   const [value, setValue] = React.useState(initialValue);
 
-  const handleSliderChange = (newValue) => {
+  const handleSliderChange = (event, newValue) => {
     setValue(newValue);
     localStorage.setItem(id, newValue);
     if (id === "speed") {
@@ -34,12 +33,16 @@ export default function InputSlider({ name, id }) {
       const defaultValue = 1;
       setValue(defaultValue);
       localStorage.setItem(id, defaultValue);
+      if (id === "speed") {
+        setRate(defaultValue);
+      } else if (id === "pitch") {
+        setPitch(defaultValue);
+      } else if (id === "volume") {
+        setVolume(defaultValue);
+      }
       setReset(0);
-      setPitch(defaultValue);
-      setRate(defaultValue);
-      setVolume(defaultValue);
     }
-  }, [reset]);
+  }, [reset, id, setPitch, setRate, setVolume, setReset]);
 
   return (
     <Box className="w-[70vw] ">
