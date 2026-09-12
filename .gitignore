@@ -26,4 +26,5 @@ dist-ssr
 .vercel
 
 !.env.example
-config.bat
+
+.env*
